@@ -1,4 +1,5 @@
 defmodule Issues.CLI do
+	import Issues.TableFormatter, only: [print_table_for_columns: 2]
 	
 	@default_count 4
 
@@ -8,7 +9,7 @@ defmodule Issues.CLI do
 	table of the last _n_ issues in a github project
 	"""
 
-	def run(argv) do
+	def main(argv) do
 		argv
 		  |> parse_args
 			|> process
@@ -30,8 +31,7 @@ defmodule Issues.CLI do
 		end
 	end
 
-	def process(:help) do
-		IO.puts """
+	def process(:help) do		IO.puts """
 		usage: issues <user> <project> [ count | #{@default_count} ]
 		"""
 	end
@@ -61,14 +61,6 @@ defmodule Issues.CLI do
 	def sort_into_ascending_order(list_of_issues) do
 		Enum.sort list_of_issues, 
 		     fn i1, i2 -> i1["created_at"] <= i2["created_at"] end
-	end
-	
-	def print_table_for_columns(data, columns) do
-		joined = Enum.join columns, "|"
-		IO.puts joined
-		for row <- data, column <- columns do
-			{ row[column] }
-		end
-	end
+	end	
 end
 

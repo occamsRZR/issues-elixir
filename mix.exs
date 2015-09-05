@@ -7,6 +7,7 @@ defmodule Issues.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+		 escript: escript_config,
      deps: deps]
   end
 
@@ -32,4 +33,8 @@ defmodule Issues.Mixfile do
 			{ :jsx, "~> 2.0" }
 		]
   end
+
+	defp escript_config do
+		[ main_module: Issues.CLI ]
+	end
 end
